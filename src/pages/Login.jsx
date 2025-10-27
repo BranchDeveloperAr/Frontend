@@ -19,7 +19,7 @@ export default function Login({ setUser }) {
     try {
       const deviceId = 'web-' + window.navigator.userAgent
 
-      const response = await fetch('https://backend-iota-sand-32.vercel.app/api/auth/login-web', {
+      const response = await fetch('http://localhost:3000/api/auth/login-web', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
