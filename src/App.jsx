@@ -26,7 +26,8 @@ function App() {
         </Layout>
       ) : (
         <Routes>
-          <Route path="/login" element={<Login setUser={setUser} />} />          
+          <Route path="/login" element={<Login setUser={setUser} />} />   
+                 
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       )}
