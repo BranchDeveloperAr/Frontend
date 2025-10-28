@@ -17,7 +17,7 @@ export default function Login({ setUser }) {
     setLoading(true);
     try {
       const response = await axios.post(
-        'https://backend-iota-sand-32.vercel.app/api/auth/loginweb',
+        'https://backend-iota-sand-32.vercel.app/api/auth/web',
         {
           username: formData.username,
           password: formData.password
