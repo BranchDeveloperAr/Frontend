@@ -16,7 +16,7 @@ export default function Subscriptions({ user, setUser }) {
   const loadSubscriptions = async () => {
     setLoading(true);
     try {
-      let url = 'https://backend-iota-sand-32.vercel.app/api/admin/subscriptions';
+      let url = 'https://backend-gilt-phi-28.vercel.app/api/admin/subscriptions';
       if (role !== 'admin') url += `?user_id=${userId}`;
 
       const response = await fetch(url);
