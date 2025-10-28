@@ -11,44 +11,51 @@ export default function Login({ setUser }) {
     password: ''
   });
 
- const handleLogin = async (e) => {
-  e.preventDefault();
-  setError(null);
-  setLoading(true);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
 
-  try {
-    const response = await fetch('https://backend-iota-sand-32.vercel.app/api/auth/loginweb', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: formData.username,
-        password: formData.password
-        // Eliminamos device_id y device_name para web
+    try {
+      // const response = await fetch('https://backend-iota-sand-32.vercel.app/api/auth/loginweb', {
+      // method: 'POST',
+      //headers: { 'Content-Type': 'application/json' },
+      //body: JSON.stringify({
+      // username: formData.username,
+      //password: formData.password
+      // Eliminamos device_id y device_name para web
+      //})
+      //});
+      const response = fetch('https://backend-iota-sand-32.vercel.app/api/test', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
       })
-    });
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      setError(data.error || 'Error desconocido');
-      return;
+      if (!response.ok) {
+        setError(data.error || 'Error desconocido');
+        return;
+      }
+
+      // Guardar datos localmente (solo user)
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      // Actualizar estado global
+      if (setUser) setUser(data.user);
+
+      // Redirigir a suscripciones
+      navigate('/subscriptions');
+    } catch (err) {
+      console.error(err);
+      setError('No se pudo conectar al servidor');
+    } finally {
+      setLoading(false);
     }
-
-    // Guardar datos localmente (solo user)
-    localStorage.setItem('user', JSON.stringify(data.user));
-    
-    // Actualizar estado global
-    if (setUser) setUser(data.user);
-
-    // Redirigir a suscripciones
-    navigate('/subscriptions');
-  } catch (err) {
-    console.error(err);
-    setError('No se pudo conectar al servidor');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
