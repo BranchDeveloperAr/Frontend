@@ -21,15 +21,16 @@ export default function Login({ setUser }) {
 
       const response = await fetch('https://backend-iota-sand-32.vercel.app/api/auth/login-web', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // ← Importante si usas cookies/sessions
         body: JSON.stringify({
           username: formData.username,
-          password: formData.password,
-          device_id: deviceId,
-          device_name: 'Web Browser'
+          password: formData.password
+          // Elimina device_id y device_name si no los usas
         })
-      })
-
+      });
       const data = await response.json()
 
       if (!response.ok) {
@@ -44,7 +45,7 @@ export default function Login({ setUser }) {
 
       // Actualizar estado global
       if (setUser) setUser(data.user)
-      
+
       // Redirigir a suscripciones
       navigate('/subscriptions')
 
