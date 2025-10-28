@@ -20,17 +20,15 @@ export default function Login({ setUser }) {
       const deviceId = 'web-' + window.navigator.userAgent
 
       const response = await fetch('https://backend-iota-sand-32.vercel.app/api/auth/login-web', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // ← Importante si usas cookies/sessions
-        body: JSON.stringify({
-          username: formData.username,
-          password: formData.password
-          // Elimina device_id y device_name si no los usas
-        })
-      });
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    username: formData.username,
+    password: formData.password
+  })
+});
       const data = await response.json()
 
       if (!response.ok) {
