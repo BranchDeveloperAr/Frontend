@@ -17,7 +17,7 @@ export default function Login({ setUser }) {
   setLoading(true);
 
   try {
-    const response = await fetch('https://backend-iota-sand-32.vercel.app/api/auth/login-web', {
+    const response = await fetch('https://backend-iota-sand-32.vercel.app/api/auth/loginweb', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
