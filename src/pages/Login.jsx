@@ -1,59 +1,58 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { LogIn, Lock } from 'lucide-react'
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { LogIn, Lock } from 'lucide-react';
 
 export default function Login({ setUser }) {
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     username: '',
     password: ''
-  })
+  });
 
   const handleLogin = async (e) => {
-    e.preventDefault()
-    setError(null)
-    setLoading(true)
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
 
     try {
-      const deviceId = 'web-' + window.navigator.userAgent
-
+      const deviceId = 'web-' + window.navigator.userAgent;
       const response = await fetch('https://backend-iota-sand-32.vercel.app/api/auth/login-web', {
-  method: 'POST',
-  headers: { 
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    username: formData.username,
-    password: formData.password
-  })
-});
-      const data = await response.json()
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+          device_id: deviceId,
+          device_name: 'Web Browser'
+        })
+      });
+
+      const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Error desconocido')
-        return
+        setError(data.error || 'Error desconocido');
+        return;
       }
 
       // Guardar datos localmente
-      localStorage.setItem('user', JSON.stringify(data.user))
-      localStorage.setItem('subscription', JSON.stringify(data.subscription))
-      localStorage.setItem('device_id', deviceId)
+      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('subscription', JSON.stringify(data.subscription));
+      localStorage.setItem('device_id', deviceId);
 
       // Actualizar estado global
-      if (setUser) setUser(data.user)
+      if (setUser) setUser(data.user);
 
       // Redirigir a suscripciones
-      navigate('/subscriptions')
-
+      navigate('/subscriptions');
     } catch (err) {
-      console.error(err)
-      setError('No se pudo conectar al servidor')
+      console.error(err);
+      setError('No se pudo conectar al servidor');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -127,5 +126,5 @@ export default function Login({ setUser }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
