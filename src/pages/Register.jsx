@@ -36,7 +36,7 @@ export default function Register() {
 
     try {
       const response = await fetch(
-        "https://backend-iota-sand-32.vercel.app/api/auth/register",
+        "https://backend-gilt-phi-28.vercel.app/api/auth/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
